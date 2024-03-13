@@ -1,0 +1,1 @@
+addi.w $t1,$zero,-1
