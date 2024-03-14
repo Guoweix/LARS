@@ -53,6 +53,37 @@ public final class DataTypes {
 /** Lowest value that can be stored in a MIPS word is -2<sup>31</sup> **/
     public static final int MIN_WORD_VALUE = Integer.MIN_VALUE;
 /** Maximum value that can be stored in a MIPS halfword is 2<sup>15</sup>-1 **/
+
+
+    public static final int MAX_8BIT_VALUE = 127; //(int)Math.pow(2,7) - 1;
+    public static final int MIN_8BIT_VALUE = -128; //0 - (int) Math.pow(2,7);
+
+    public static final int MAX_12BIT_VALUE = 2047; //(int)Math.pow(2,11) - 1;
+    public static final int MIN_12BIT_VALUE = -2048; //0 - (int) Math.pow(2,11);
+
+    public static final int MAX_14BIT_VALUE = 8191; //(int)Math.pow(2,13) - 1;
+    public static final int MIN_14BIT_VALUE = -8192; //0 - (int) Math.pow(2,13);
+
+    public static final int MAX_20BIT_VALUE =  524287; //(int)Math.pow(2,19) - 1;
+    public static final int MIN_20BIT_VALUE = -524288; //0 - (int) Math.pow(2,19);
+
+
+    public static final int MAX_21BIT_VALUE = 1048575; //(int)Math.pow(2,20) - 1;
+    public static final int MIN_21BIT_VALUE = -1048576; //0 - (int) Math.pow(2,20);
+
+    public static final int MAX_26BIT_VALUE = 33554431; //(int)Math.pow(2,25) - 1;
+    public static final int MIN_26BIT_VALUE = -33554432; //0 - (int) Math.pow(2,25);
+
+
+    public static final int MAX_U8BIT_VALUE = 255; 
+    public static final int MAX_U12BIT_VALUE = 4095; 
+    public static final int MAX_U14BIT_VALUE = 16383; 
+    public static final int MAX_U20BIT_VALUE = 1048575; 
+    public static final int MAX_U21BIT_VALUE = 2097151; 
+    public static final int MAX_U26BIT_VALUE = 67108845; 
+
+    public static final int ZERO = 0; 
+
     public static final int MAX_HALF_VALUE = 32767; //(int)Math.pow(2,15) - 1;
 /** Lowest value that can be stored in a MIPS halfword is -2<sup>15</sup> **/
     public static final int MIN_HALF_VALUE = -32768; //0 - (int) Math.pow(2,15);

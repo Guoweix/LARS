@@ -273,8 +273,7 @@ public class ProgramStatement {
                basicStatementList.addValue(address);
             }
             this.operands[this.numOperands++] = address;
-         } else if (tokenType == TokenTypes.INTEGER_5 || tokenType == TokenTypes.INTEGER_16 ||
-               tokenType == TokenTypes.INTEGER_16U || tokenType == TokenTypes.INTEGER_32) {
+         } else if (TokenTypes.isIntegerTokenType(tokenType)) {
 
             int tempNumeric = Binary.stringToInt(tokenValue);
 
@@ -377,16 +376,15 @@ public class ProgramStatement {
       // System.out.println(this.machineStatement);
       BasicInstructionFormat format = ((BasicInstruction) instruction).getInstructionFormat();
 
-
       // System.out.println("numOperands"+this.numOperands);
 
       if (format == BasicInstructionFormat.ONE_R_I21_TYPE) {
-            this.insertBinaryCode(this.operands[0], Instruction.operandMask[0], errors);
-            this.insertBinaryCode(this.operands[1]&0x7fff, Instruction.operandMask[1], errors);
-            this.insertBinaryCode(this.operands[1]>>15, Instruction.operandMask[2], errors);
+         this.insertBinaryCode(this.operands[0], Instruction.operandMask[0], errors);
+         this.insertBinaryCode(this.operands[1] & 0x7fff, Instruction.operandMask[1], errors);
+         this.insertBinaryCode(this.operands[1] >> 15, Instruction.operandMask[2], errors);
       } else if (format == BasicInstructionFormat.I26_TYPE) {
-         int code=((this.operands[0]&0x7fff)<<10) |((this.operands[0]>>>16)&0x3ff);
-            this.insertBinaryCode(code, Instruction.operandMask[0], errors);
+         int code = ((this.operands[0] & 0x7fff) << 10) | ((this.operands[0] >>> 16) & 0x3ff);
+         this.insertBinaryCode(code, Instruction.operandMask[0], errors);
       } else {
          for (int i = 0; i < this.numOperands; i++)
             this.insertBinaryCode(this.operands[i], Instruction.operandMask[i], errors);
@@ -412,7 +410,7 @@ public class ProgramStatement {
       // this.insertBinaryCode(operands[this.numOperands-1],
       // Instruction.operandMask[this.numOperands-1], errors);
       // }
-      // else { 
+      // else {
       // for (int i=0; i<this.numOperands; i++)
       // this.insertBinaryCode(this.operands[i], Instruction.operandMask[i], errors);
       // }
@@ -651,9 +649,8 @@ public class ProgramStatement {
       int startPos = this.machineStatement.indexOf(mask);
       int endPos = this.machineStatement.lastIndexOf(mask);
 
-
       // if (Globals.debug) {
-         // System.out.println(startPos+","+endPos);
+      // System.out.println(startPos+","+endPos);
       // }
 
       if (startPos == -1 || endPos == -1) { // should NEVER occur

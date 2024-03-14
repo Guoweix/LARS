@@ -117,7 +117,7 @@ public class InstructionSet {
                   }));
 
       instructionList.add(
-            new BasicInstruction("addi.w $t1,$t2,-100",
+            new BasicInstruction("addi.w $t1,$t2,-1000",
                   "Addition without overflow : set $t1 to ($t2 add  $t3) no overflow",
                   BasicInstructionFormat.TOW_R_I12_TYPE,
                   "0000001001 cccccccccccc bbbbb aaaaa",
@@ -135,7 +135,7 @@ public class InstructionSet {
       //////////// Branch ////////////////////////
 
       instructionList.add(
-            new BasicInstruction("beq $t1,$t2,-100",
+            new BasicInstruction("beq $t1,$t2,-10000",
                   "Branch if equal : Branch to statement at label's address if $t1 and $t2 are equal",
                   BasicInstructionFormat.TOW_R_I16_TYPE,
                   "010110 cccccccccccccccc  aaaaa bbbbb",
@@ -150,7 +150,7 @@ public class InstructionSet {
                   }));
 
       instructionList.add(
-            new BasicInstruction("bne $t1,$t-100",
+            new BasicInstruction("bne $t1,$t2,-10000",
                   "Branch if not equal : Branch to statement at label's address if $t1 and $t2 are not equal",
                   BasicInstructionFormat.TOW_R_I16_TYPE,
                   "010111 cccccccccccccccc   aaaaa bbbbb",
@@ -165,7 +165,7 @@ public class InstructionSet {
                   }));
 
       instructionList.add(
-            new BasicInstruction("blt $t1,$t2,-100",
+            new BasicInstruction("blt $t1,$t2,-10000",
                   "Branch if less : Branch to statement at label's address if $t1 is less than $t2",
                   BasicInstructionFormat.TOW_R_I16_TYPE,
                   "011000 cccccccccccccccc aaaaa bbbbb ",
@@ -180,7 +180,7 @@ public class InstructionSet {
                   }));
 
       instructionList.add(
-            new BasicInstruction("bge $t1,$t2,-100",
+            new BasicInstruction("bge $t1,$t2,-10000",
                   "Branch if greater : Branch to statement at label's address if $t1 is greater than $t2",
                   BasicInstructionFormat.TOW_R_I16_TYPE,
                   "011001 cccccccccccccccc aaaaa bbbbb ",
@@ -195,7 +195,7 @@ public class InstructionSet {
                   }));
 
       instructionList.add(
-            new BasicInstruction("bltu $t1,$t2,-100",
+            new BasicInstruction("bltu $t1,$t2,-10000",
                   "Branch if less or equal to $t2  : Branch to statement at label's address if $t1 is less than $t2",
                   BasicInstructionFormat.TOW_R_I16_TYPE,
                   "011010 cccccccccccccccc aaaaa bbbbb ",
@@ -210,7 +210,7 @@ public class InstructionSet {
                   }));
 
       instructionList.add(
-            new BasicInstruction("bgeu $t1,$t2,-100",
+            new BasicInstruction("bgeu $t1,$t2,-10000",
                   "Branch if greater  : Branch to statement at label's address if $t1 is greater than $t2",
                   BasicInstructionFormat.TOW_R_I16_TYPE,
                   "011011 cccccccccccccccc aaaaa bbbbb ",
