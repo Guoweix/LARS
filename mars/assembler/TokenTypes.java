@@ -153,6 +153,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          try {
 
             int i = Binary.stringToInt(value);   // KENV 1/6/05
+
+            if (Globals.debug) {
+               System.out.println(" an immediate (constant) integer value :"+i);               
+            }
 				
 		/***************************************************************************
 		 *  MODIFICATION AND COMMENT, DPS 3-July-2008

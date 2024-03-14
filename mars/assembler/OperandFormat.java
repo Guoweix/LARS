@@ -106,6 +106,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          Token candToken, specToken;
          TokenTypes candType, specType;
          for (int i=1; i<spec.getTokenList().size(); i++) {
+            
+
             candToken = cand.get(i);
             specToken = spec.getTokenList().get(i);
             candType = candToken.getType();

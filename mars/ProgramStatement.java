@@ -650,7 +650,12 @@ public class ProgramStatement {
    private void insertBinaryCode(int value, char mask, ErrorList errors) {
       int startPos = this.machineStatement.indexOf(mask);
       int endPos = this.machineStatement.lastIndexOf(mask);
-      System.out.println(startPos+","+endPos);
+
+
+      // if (Globals.debug) {
+         // System.out.println(startPos+","+endPos);
+      // }
+
       if (startPos == -1 || endPos == -1) { // should NEVER occur
          errors.add(new ErrorMessage(this.sourceMIPSprogram, this.sourceLine, 0,
                "INTERNAL ERROR: mismatch in number of operands in statement vs mask"));

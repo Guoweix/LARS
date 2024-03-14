@@ -83,44 +83,6 @@ public class InstructionSet {
       // //////////////////////////////////// BASIC INSTRUCTIONS START HERE
       // ////////////////////////////////
 
-      instructionList.add(
-            new BasicInstruction("fuck $t1,$t2,$t3",
-                  "Addition with overflow : set $t3 to ($t2 add $t1 add 2)",
-                  BasicInstructionFormat.THREE_R_TYPE,
-                  "00000000000000000 kkkkk jjjjj ddddd ",
-                  new SimulationCode() {
-                     public void simulate(ProgramStatement statement) throws ProcessingException {
-                        int[] operands = statement.getOperands();
-                        int t2 = RegisterFile.getValue(operands[1]);
-                        int t1 = RegisterFile.getValue(operands[0]);
-
-                        int sum = t1 + t2 + 2;
-                        // overflow on A+B detected when A and B have same sign and A+B has other sign.
-                        if ((t1 >= 0 && sum < 0)
-                              || (t1 < 0 && sum >= 0)) {
-                           throw new ProcessingException(statement,
-                                 "arithmetic overflow", Exceptions.ARITHMETIC_OVERFLOW_EXCEPTION);
-                        }
-                        RegisterFile.updateRegister(operands[2], sum);
-                     }
-                  }));
-
-      instructionList.add(
-            new BasicInstruction("test $t0,$t1,$t2,-100",
-                  "test  a k j d ",
-                  BasicInstructionFormat.THREE_R_TYPE,
-                  "00000 00000 aaaaaaa bbbbb ccccc ddddd ",
-                  new SimulationCode() {
-                     public void simulate(ProgramStatement statement) throws ProcessingException {
-                        int[] operands = statement.getOperands();
-
-                        System.out.println(operands[0]);
-                        System.out.println(operands[1]);
-                        System.out.println(operands[2]);
-                        System.out.println(operands[3]);
-
-                     }
-                  }));
 
       instructionList.add(
             new BasicInstruction("add.w $t1,$t2,$t3",
@@ -322,6 +284,11 @@ public class InstructionSet {
       for (int i = 0; i < instructionList.size(); i++) {
          Instruction inst = (Instruction) instructionList.get(i);
          inst.createExampleTokenList();
+         if (Globals.debug) {
+            System.out.print("TokenList :");
+            System.out.println(inst.getTokenList().toTypeString());
+            
+         }
       }
 
       HashMap maskMap = new HashMap();
