@@ -50,6 +50,7 @@ public class BasicInstructionFormat {
     public static final BasicInstructionFormat TOW_R_I16_TYPE= new BasicInstructionFormat();
     public static final BasicInstructionFormat ONE_R_I21_TYPE= new BasicInstructionFormat();
     public static final BasicInstructionFormat I26_TYPE= new BasicInstructionFormat();
+    public static final BasicInstructionFormat SYSCALL= new BasicInstructionFormat();
     
     // private default constructor prevents objects of this class other than those above.
     private BasicInstructionFormat() {

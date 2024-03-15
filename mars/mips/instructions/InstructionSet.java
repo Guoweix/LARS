@@ -79,10 +79,10 @@ public class InstructionSet {
       /*
        * Here is where the parade begins. Every instruction is added to the set here.
        */
+      //
 
       // //////////////////////////////////// BASIC INSTRUCTIONS START HERE
       // ////////////////////////////////
-
 
       instructionList.add(
             new BasicInstruction("add.w $t1,$t2,$t3",
@@ -262,15 +262,29 @@ public class InstructionSet {
                         int[] operands = statement.getOperands();
 
                         RegisterFile.updateRegister(operands[0], RegisterFile.getProgramCounter() + 4);
-                        processJump(operands[2]+(operands[3]<<2));
+                        processJump(operands[2] + (operands[3] << 2));
 
                      }
                   }));
 
+      instructionList.add(
+            new BasicInstruction("syscall $t1",
+                  "Issue a system call: Execute the system call specified by value in $a0",
+                  BasicInstructionFormat.THREE_R_TYPE,
+                  "0000000000 1010100   aaaaa  aaaaa aaaaa ",
+                  new SimulationCode() {
+                     public void simulate(ProgramStatement statement) throws ProcessingException {
+                        // a7
+                        if (Globals.debug) {
+                           System.out.println("SYSCALL Begin");
+                        }
+                        findAndSimulateSyscall(RegisterFile.getValue(11), statement);
+                        if (Globals.debug) {
+                           System.out.println("SYSCALL END");
+                        }
 
-
-
-
+                     }
+                  }));
 
       addPseudoInstructions();
 
@@ -287,7 +301,7 @@ public class InstructionSet {
          if (Globals.debug) {
             System.out.print("TokenList :");
             System.out.println(inst.getTokenList().toTypeString());
-            
+
          }
       }
 
@@ -446,7 +460,12 @@ public class InstructionSet {
    private void findAndSimulateSyscall(int number, ProgramStatement statement)
          throws ProcessingException {
       Syscall service = syscallLoader.findSyscall(number);
+      if (Globals.debug) {
+         System.out.println(service.getName()+"  begin:");
+      }
+
       if (service != null) {
+         
          service.simulate(statement);
          return;
       }
@@ -498,9 +517,9 @@ public class InstructionSet {
 
    private void processJump(int targetAddress) {
       // if (Globals.getSettings().getDelayedBranchingEnabled()) {
-         // DelayedBranch.register(targetAddress);
+      // DelayedBranch.register(targetAddress);
       // } else {
-         RegisterFile.setProgramCounter(targetAddress);
+      RegisterFile.setProgramCounter(targetAddress);
       // }
    }
 
