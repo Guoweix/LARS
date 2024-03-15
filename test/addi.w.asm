@@ -12,3 +12,4 @@ addi.w $a0,$a0,2047
 addi.w $a2,$a2,-2048
 #addi.w $t0,$t0,1000000000
 
+//Tokenlist :<OPERATOR addi.w> <REGISTER_NAME ><REGISTER_NAME><integer_8U>
