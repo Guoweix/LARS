@@ -60,22 +60,22 @@ public final class TokenTypes {
    public static final TokenTypes RIGHT_PAREN = new TokenTypes("RIGHT_PAREN");
    // public static final TokenTypes INTEGER = new TokenTypes("INTEGER");
 
-   public static final TokenTypes INTEGER_5 = new TokenTypes("INTEGER_5", 5);
-   public static final TokenTypes INTEGER_8 = new TokenTypes("INTEGER_8", 8);
-   public static final TokenTypes INTEGER_8U = new TokenTypes("INTEGER_8U", 8);
-   public static final TokenTypes INTEGER_12 = new TokenTypes("INTEGER_12", 12);
-   public static final TokenTypes INTEGER_12U = new TokenTypes("INTEGER_12U", 12);
-   public static final TokenTypes INTEGER_14 = new TokenTypes("INTEGER_14", 14);
-   public static final TokenTypes INTEGER_14U = new TokenTypes("INTEGER_14U", 14);
-   public static final TokenTypes INTEGER_16 = new TokenTypes("INTEGER_16", 16);
-   public static final TokenTypes INTEGER_16U = new TokenTypes("INTEGER_16U", 16);
-   public static final TokenTypes INTEGER_20 = new TokenTypes("INTEGER_20", 20);
-   public static final TokenTypes INTEGER_20U = new TokenTypes("INTEGER_20U", 20);
-   public static final TokenTypes INTEGER_21 = new TokenTypes("INTEGER_21", 21);
-   public static final TokenTypes INTEGER_21U = new TokenTypes("INTEGER_21U", 21);
-   public static final TokenTypes INTEGER_26 = new TokenTypes("INTEGER_26", 26);
-   public static final TokenTypes INTEGER_26U = new TokenTypes("INTEGER_26U", 26);
-   public static final TokenTypes INTEGER_32 = new TokenTypes("INTEGER_32", 32);
+   public static final TokenTypes INTEGER_5 = new TokenTypes("INTEGER_5", 0,31);
+   public static final TokenTypes INTEGER_8 = new TokenTypes("INTEGER_8", DataTypes.MIN_8BIT_VALUE,DataTypes.MAX_8BIT_VALUE);
+   public static final TokenTypes INTEGER_8U = new TokenTypes("INTEGER_8U", DataTypes.ZERO,DataTypes.MAX_U8BIT_VALUE);
+   public static final TokenTypes INTEGER_12 = new TokenTypes("INTEGER_12", DataTypes.MIN_12BIT_VALUE,DataTypes.MAX_12BIT_VALUE);
+   public static final TokenTypes INTEGER_12U = new TokenTypes("INTEGER_12U", DataTypes.ZERO,DataTypes.MAX_U12BIT_VALUE);
+   public static final TokenTypes INTEGER_14 = new TokenTypes("INTEGER_14", DataTypes.MIN_14BIT_VALUE,DataTypes.MAX_14BIT_VALUE);
+   public static final TokenTypes INTEGER_14U = new TokenTypes("INTEGER_14U", DataTypes.ZERO,DataTypes.MAX_U14BIT_VALUE);
+   public static final TokenTypes INTEGER_16 = new TokenTypes("INTEGER_16", DataTypes.MIN_HALF_VALUE,DataTypes.MAX_HALF_VALUE);
+   public static final TokenTypes INTEGER_16U = new TokenTypes("INTEGER_16U", DataTypes.ZERO,DataTypes.MAX_UHALF_VALUE);
+   public static final TokenTypes INTEGER_20 = new TokenTypes("INTEGER_20", DataTypes.MIN_20BIT_VALUE,DataTypes.MAX_20BIT_VALUE);
+   public static final TokenTypes INTEGER_20U = new TokenTypes("INTEGER_20U", DataTypes.ZERO,DataTypes.MAX_U20BIT_VALUE);
+   public static final TokenTypes INTEGER_21 = new TokenTypes("INTEGER_21", DataTypes.MIN_21BIT_VALUE,DataTypes.MAX_21BIT_VALUE);
+   public static final TokenTypes INTEGER_21U = new TokenTypes("INTEGER_21U", DataTypes.ZERO,DataTypes.MAX_U21BIT_VALUE);
+   public static final TokenTypes INTEGER_26 = new TokenTypes("INTEGER_26", DataTypes.MIN_26BIT_VALUE,DataTypes.MAX_26BIT_VALUE);
+   public static final TokenTypes INTEGER_26U = new TokenTypes("INTEGER_26U", DataTypes.ZERO,DataTypes.MAX_U26BIT_VALUE);
+   public static final TokenTypes INTEGER_32 = new TokenTypes("INTEGER_32", DataTypes.MIN_WORD_VALUE,DataTypes.MAX_WORD_VALUE);
 
    public static final TokenTypes REAL_NUMBER = new TokenTypes("REAL_NUMBER");
    public static final TokenTypes QUOTED_STRING = new TokenTypes("QUOTED_STRING");
@@ -86,7 +86,7 @@ public final class TokenTypes {
    public static final TokenTypes MACRO_PARAMETER = new TokenTypes("MACRO_PARAMETER");
 
    private String descriptor;
-   private int bit_width;
+   private int max_value,min_value;
 
    private TokenTypes() {
       // private ctor assures no objects can be created other than those above.
@@ -98,9 +98,11 @@ public final class TokenTypes {
       descriptor = name;
    }
 
-   private TokenTypes(String name, int _bit_width) {
+   private TokenTypes(String name, int _min_value,int _max_value) {
       descriptor = name;
-      bit_width = _bit_width;
+      max_value=_max_value;
+      min_value=_min_value;
+      
    }
 
    /**
@@ -237,42 +239,50 @@ public final class TokenTypes {
          if (i >= DataTypes.ZERO && i <= DataTypes.MAX_8BIT_VALUE) {
             return TokenTypes.INTEGER_8U;
          }
-         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_U12BIT_VALUE) {
-            return TokenTypes.INTEGER_12U;
-         }
-         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_U14BIT_VALUE) {
-            return TokenTypes.INTEGER_14U;
-         }
-         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_UHALF_VALUE) {
-            return TokenTypes.INTEGER_16U;
-         }
-         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_U20BIT_VALUE) {
-            return TokenTypes.INTEGER_20U;
-         }
-         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_U21BIT_VALUE) {
-            return TokenTypes.INTEGER_21U;
-         }
-         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_U26BIT_VALUE) {
-            return TokenTypes.INTEGER_26U;
-         }
-
          if (i >= DataTypes.MIN_8BIT_VALUE && i <= DataTypes.MAX_8BIT_VALUE) {
             return TokenTypes.INTEGER_8;
+         }
+
+         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_U12BIT_VALUE) {
+            return TokenTypes.INTEGER_12U;
          }
          if (i >= DataTypes.MIN_12BIT_VALUE && i <= DataTypes.MAX_12BIT_VALUE) {
             return TokenTypes.INTEGER_12;
          }
+
+         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_U14BIT_VALUE) {
+            return TokenTypes.INTEGER_14U;
+         }
+
          if (i >= DataTypes.MIN_14BIT_VALUE && i <= DataTypes.MAX_14BIT_VALUE) {
             return TokenTypes.INTEGER_14;
          }
+
+         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_UHALF_VALUE) {
+            return TokenTypes.INTEGER_16U;
+         }
+
          if (i >= DataTypes.MIN_HALF_VALUE && i <= DataTypes.MAX_HALF_VALUE) {
             return TokenTypes.INTEGER_16;
          }
+
+         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_U20BIT_VALUE) {
+            return TokenTypes.INTEGER_20U;
+         }
+
          if (i >= DataTypes.MIN_20BIT_VALUE && i <= DataTypes.MAX_20BIT_VALUE) {
             return TokenTypes.INTEGER_20;
          }
+
+         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_U21BIT_VALUE) {
+            return TokenTypes.INTEGER_21U;
+         }
+
          if (i >= DataTypes.MIN_21BIT_VALUE && i <= DataTypes.MAX_21BIT_VALUE) {
             return TokenTypes.INTEGER_21;
+         }
+         if (i >= DataTypes.ZERO && i <= DataTypes.MAX_U26BIT_VALUE) {
+            return TokenTypes.INTEGER_26U;
          }
          if (i >= DataTypes.MIN_26BIT_VALUE && i <= DataTypes.MAX_26BIT_VALUE) {
             return TokenTypes.INTEGER_26;
@@ -338,12 +348,14 @@ public final class TokenTypes {
 
    }
 
-
-   public int getBitWidth()
-   {
-      return this.bit_width;
+   public int maxValue() {
+      return this.max_value;
    }
 
+   public int minValue() {
+      return this.min_value;
+   }
+ 
    /**
     *
     * Lets you know if given tokentype is for floating point numbers (REAL_NUMBER).

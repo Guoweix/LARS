@@ -154,24 +154,26 @@ public class OperandFormat {
                continue;
             }
          }
+
+         int temp=Binary.stringToInt(candToken.getValue());
+         
+
          if (specType == TokenTypes.REGISTER_NAME &&
                candType == TokenTypes.REGISTER_NUMBER)
             continue;
-         if (specType.getBitWidth() > candType.getBitWidth()) {
-            continue;
-         }
-         if (specType.getBitWidth() < candType.getBitWidth()) {
+
+
+
+         if (specType.maxValue() < temp||temp<specType.minValue()) {
             generateMessage(candToken, "operand is  out of  range", errors);
             return false;
          }
-      
-         if (candType == specType) {
+         else {
             continue;
          }
-         else {
-            generateMessage(candToken, "operand is of incorrect type", errors);
-            return false;
-         } 
+         //    generateMessage(candToken, "operand is of incorrect type", errors);
+         //    return false;
+         // } 
 
 
       }
