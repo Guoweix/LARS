@@ -134,6 +134,414 @@ public class InstructionSet {
                      }
                   }));
 
+      /////////////////slt sltu slti sltui ///////////////////////////
+
+      instructionList.add(
+              new BasicInstruction("slt $t1,$t2,$t3",
+                      "Set less than : If $t2 is less than $t3, then set $t1 to 1 else set $t1 to 0",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000100100 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            int slt = (t1 < t2) ? 1 : 0;
+                            RegisterFile.updateRegister(operands[0], slt);
+                         }
+                      }));
+
+
+      instructionList.add(
+              new BasicInstruction("sltu $t1,$t2,$t3",
+                      "Set less than unsigned : If $t2 is less than $t3 using unsigned comparision, then set $t1 to 1 else set $t1 to 0",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000100101 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            int sltu = ((((long) t1)<<32>>>32) < (((long) t2)<<32>>>32)) ? 1 : 0;
+                            RegisterFile.updateRegister(operands[0], sltu);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("slti $t1,$t2,-100",
+                      "Set less than immediate : If $t2 is less than sign-extended 12-bit immediate, then set $t1 to 1 else set $t1 to 0",
+                      BasicInstructionFormat.TOW_R_I12_TYPE,
+                      "0000001000 cccccccccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = operands[2]<<20>>20;
+
+                            int slti = t1 < t2 ? 1 : 0;
+                            RegisterFile.updateRegister(operands[0], slti);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("sltui $t1,$t2,-100",
+                      "Set less than immediate unsigned : If $t2 is less than  sign-extended 12-bit immediate using unsigned comparison, then set $t1 to 1 else set $t1 to 0",
+                      BasicInstructionFormat.TOW_R_I12_TYPE,
+                      "0000001001 cccccccccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = operands[2]<<20>>20;
+
+                            int sltui = ((((long) t1)<<32>>>32) < (((long) t2)<<32>>>32)) ? 1 : 0;
+                            RegisterFile.updateRegister(operands[0], sltui);
+                         }
+                      }));
+
+      ///////////////////////and & or & nor & xor //////////////////////////////
+
+      instructionList.add(
+              new BasicInstruction("and $t1,$t2,$t3",
+                      "Bitwise AND : Set $t1 to bitwise AND of $t2 and $t3",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000101001 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            int and = t1 & t2;
+                            RegisterFile.updateRegister(operands[0], and);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("or $t1,$t2,$t3",
+                      "Bitwise OR : Set $t1 to bitwise OR of $t2 and $t3",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000101010 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            int or = t1 | t2;
+                            RegisterFile.updateRegister(operands[0], or);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("nor $t1,$t2,$t3",
+                      "Bitwise NOR : Set $t1 to bitwise NOR of $t2 and $t3",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000101000 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            int nor = ~(t1 | t2);
+                            RegisterFile.updateRegister(operands[0], nor);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("xor $t1,$t2,$t3",
+                      "Bitwise XOR : Set $t1 to bitwise XOR of $t2 and $t3",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000101011 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            int xor = t1 ^ t2;
+                            RegisterFile.updateRegister(operands[0], xor);
+                         }
+                      }));
+
+      /////////////////////////////andi & ori & xori /////////////////////////////
+
+      instructionList.add(
+              new BasicInstruction("andi $t1,$t2,100",
+                      "Bitwise AND immediate : Set $t1 to bitwise AND of $t2 and zero-extended 12-bit immediate",
+                      BasicInstructionFormat.TOW_R_I12_TYPE,
+                      "0000001101 cccccccccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = operands[2] & 0x00000FFF;
+
+                            int andi = t1 & t2;
+                            RegisterFile.updateRegister(operands[0], andi);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("ori $t1,$t2,$t3",
+                      "Bitwise OR immediate : Set $t1 to bitwise OR of $t2 and zero-extended 12-bit immediate",
+                      BasicInstructionFormat.TOW_R_I12_TYPE,
+                      "0000001110 cccccccccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = operands[2] & 0x00000FFF;
+
+                            int ori = t1 | t2;
+                            RegisterFile.updateRegister(operands[0], ori);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("xori $t1,$t2,$t3",
+                      "Bitwise XOR immediate : Set $t1 to bitwise XOR of $t2 and zero-extended 12-bit immediate",
+                      BasicInstructionFormat.TOW_R_I12_TYPE,
+                      "0000001111 cccccccccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = operands[2] & 0x00000FFF;
+
+                            int xori = t1 ^ t2;
+                            RegisterFile.updateRegister(operands[0], xori);
+                         }
+                      }));
+
+      //////////////////////////mul & mulh & mulh.wu & div & div.wu & mod & mod.wu ////////////////////////////////
+
+      instructionList.add(
+              new BasicInstruction("mul.w $t1,$t2,$t3",
+                      "Multiplication without overflow : set $t1 to ($t2 mul  $t3) no overflow",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000111000 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            int mul = t1 * t2;
+                            RegisterFile.updateRegister(operands[0], mul);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("mulh.w $t1,$t2,$t3",
+                      "Multiplication high without overflow : set $t1 to ($t2 mulh  $t3) no overflow",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000111001 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            long result = ((long)t1) * ((long)t2);
+                            int mul = (int)(result>>32);
+                            RegisterFile.updateRegister(operands[0], mul);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("mulh.wu $t1,$t2,$t3",
+                      "Multiplication high unsigned without overflow : set $t1 to ($t2 mulhu  $t3) no overflow",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000111010 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            long mul = (((long) t1)<<32>>>32) * (((long) t2)<<32>>>32);
+                            RegisterFile.updateRegister(operands[0],(int)(mul>>32));
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("div.w $t1,$t2,$t3",
+                      "Division without overflow : set $t1 to ($t2 div  $t3) no overflow",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000001000000 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            if (t2 == 0) {
+                               return;
+                            }
+                            int div = t1 / t2;
+                            RegisterFile.updateRegister(operands[0],div);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("div.wu $t1,$t2,$t3",
+                      "Division unsigned without overflow: set $t1 to ( $t2 divu  $t3) no overflow",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000001000010 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            if (t2 == 0) {
+                               return;
+                            }
+                            int div = (int)((((long) t1)<<32>>>32) / (((long) t2)<<32>>>32));
+                            RegisterFile.updateRegister(operands[0],div);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("mod.w $t1,$t2,$t3",
+                      "module without overflow : set $t1 to ($t2 mod  $t3) no overflow",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000001000001 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            if (t2 == 0) {
+                               return;
+                            }
+                            int mod = t1 % t2;
+                            RegisterFile.updateRegister(operands[0],mod);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("mod.wu $t1,$t2,$t3",
+                      "module unsigned without overflow : set $t1 to ($t2 modu  $t3) no overflow",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000001000011 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            if (t2 == 0) {
+                               return;
+                            }
+                            int modu = (int)((((long) t1)<<32>>>32) % (((long) t2)<<32>>>32));
+                            RegisterFile.updateRegister(operands[0],modu);
+                         }
+                      }));
+
+      /////////////////////////////sll & srl & sra & slli & srli & srai/////////////////////////////////////
+
+      instructionList.add(
+              new BasicInstruction("sll.w $t1,$t2,$t3",
+                      "Shift left logical variable : Set $t1 to result of shifting $t2 left by number of bits specified by value in low-order 5 bits of $t3",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000101110 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            int sll = t1 <<(t2 & 0x0000001F);
+                            RegisterFile.updateRegister(operands[0],sll);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("srl.w $t1,$t2,$t3",
+                      "Shift right logical variable : Set $t1 to result of shifting $t2 right by number of bits specified by value in low-order 5 bits of $t3",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000101111 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            int srl = t1 >>>(t2 & 0x0000001F);
+                            RegisterFile.updateRegister(operands[0],srl);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("sra.w $t1,$t2,$t3",
+                      "Shift right arithmetic variable : Set $t1 to result of sign-extended shifting $t2 right by number of bits specified by value in low-order 5 bits of $t3",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000000110000 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = RegisterFile.getValue(operands[2]);
+
+                            int sra = t1 >>(t2 & 0x0000001F);
+                            RegisterFile.updateRegister(operands[0],sra);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("slli.w $t1,$t2,10",
+                      "Shift left logical : Set $t1 to result of shifting $t2 left by number of bits specified by immediate",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000010000001 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = operands[2];
+
+                            int slli = t1 << t2;
+                            RegisterFile.updateRegister(operands[0],slli);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("srli.w $t1,$t2,10",
+                      "Shift right logical : Set $t1 to result of shifting $t2 right by number of bits specified by immediate",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000010001001 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = operands[2];
+
+                            int srli = t1 >>> t2;
+                            RegisterFile.updateRegister(operands[0],srli);
+                         }
+                      }));
+
+      instructionList.add(
+              new BasicInstruction("srai.w $t1,$t2,10",
+                      "Shift right arithmetic : Set $t1 to result of sign-extended shifting $t2 right by number of bits specified by immediate",
+                      BasicInstructionFormat.THREE_R_TYPE,
+                      "00000000010010001 ccccc bbbbb aaaaa",
+                      new SimulationCode() {
+                         public void simulate(ProgramStatement statement) throws ProcessingException {
+                            int[] operands = statement.getOperands();
+                            int t1 = RegisterFile.getValue(operands[1]);
+                            int t2 = operands[2];
+
+                            int srai = t1 >> t2 ;
+                            RegisterFile.updateRegister(operands[0],srai);
+                         }
+                      }));
+
       //////////// Branch ////////////////////////
 
       instructionList.add(
