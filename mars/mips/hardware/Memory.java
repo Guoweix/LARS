@@ -232,7 +232,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public static void setConfiguration() {
          textBaseAddress = MemoryConfigurations.getCurrentConfiguration().getTextBaseAddress(); //0x00400000;
          dataSegmentBaseAddress = MemoryConfigurations.getCurrentConfiguration().getDataSegmentBaseAddress(); //0x10000000;
+
          externBaseAddress = MemoryConfigurations.getCurrentConfiguration().getExternBaseAddress(); //0x10000000;
+
          globalPointer = MemoryConfigurations.getCurrentConfiguration().getGlobalPointer(); //0x10008000;
          dataBaseAddress = MemoryConfigurations.getCurrentConfiguration().getDataBaseAddress(); //0x10010000; // from SPIM not MIPS
          heapBaseAddress = MemoryConfigurations.getCurrentConfiguration().getHeapBaseAddress(); //0x10040000; // I think from SPIM not MIPS
