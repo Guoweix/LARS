@@ -221,7 +221,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          if (config != currentConfiguration) {
             currentConfiguration = config;
             Globals.memory.clear();
-            RegisterFile.getUserRegister("$gp").changeResetValue(config.getGlobalPointer());
+            // RegisterFile.getUserRegister("$gp").changeResetValue(config.getGlobalPointer());
+
             RegisterFile.getUserRegister("$sp").changeResetValue(config.getStackPointer());
             RegisterFile.getProgramCounterRegister().changeResetValue(config.getTextBaseAddress());
             RegisterFile.initializeProgramCounter(config.getTextBaseAddress());
