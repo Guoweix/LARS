@@ -66,6 +66,7 @@ public class InstructionSet {
 
    }
 
+
    /**
     * Adds all instructions to the set. A given extended instruction may have
     * more than one Instruction object, depending on how many formats it can have.
@@ -116,6 +117,7 @@ public class InstructionSet {
                      }
                   }));
 
+   //Tokenlist :<OPERATOR addi.w> <REGISTER_NAME ><REGISTER_NAME><INTEGER_16>
       instructionList.add(
             new BasicInstruction("addi.w $t1,$t2,-1000",
                   "Addition without overflow : set $t1 to ($t2 add  $t3) no overflow",
