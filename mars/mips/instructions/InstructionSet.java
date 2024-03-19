@@ -708,11 +708,10 @@ public class InstructionSet {
       for (int i = 0; i < instructionList.size(); i++) {
          Instruction inst = (Instruction) instructionList.get(i);
          inst.createExampleTokenList();
-         if (Globals.debug) {
-            System.out.print("TokenList :");
-            System.out.println(inst.getTokenList().toTypeString());
-
-         }
+         // if (Globals.debug) {
+         //    System.out.print("TokenList :");
+         //    System.out.println(inst.getTokenList().toTypeString());
+         // }
       }
 
       HashMap maskMap = new HashMap();

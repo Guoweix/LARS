@@ -17,6 +17,7 @@
    import mars.mips.instructions.Instruction;
    import mars.util.Binary;
    import mars.util.SystemIO;
+import mars.venus.editors.jeditsyntax.InputHandler.prev_line;
 
 /*
  Copyright (c) 2003-2012,  Pete Sanderson and Kenneth Vollmar
@@ -264,12 +265,13 @@
             currentFileDataSegmentForwardReferences.clear();
          } // end of first-pass loop for each MIPSprogram
       
-      
+
       
       // Have processed all source files. Attempt to resolve any remaining forward label
       // references from global symbol table. Those that remain unresolved are undefined
       // and require error message.
          accumulatedDataSegmentForwardReferences.resolve(Globals.symbolTable);
+
          accumulatedDataSegmentForwardReferences.generateErrorMessages(errors);
       
       // Throw collection of errors accumulated through the first pass.
@@ -455,6 +457,7 @@
          ArrayList<ProgramStatement> ret = new ArrayList<ProgramStatement>();
       
          ProgramStatement programStatement;
+
          TokenList tokens = this.stripComment(tokenList);
       
       // Labels should not be processed in macro definition segment.

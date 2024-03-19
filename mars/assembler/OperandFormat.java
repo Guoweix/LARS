@@ -117,10 +117,12 @@ public class OperandFormat {
          specToken = spec.getTokenList().get(i);
          candType = candToken.getType();
          specType = specToken.getType();
-         if (Globals.debug) {
-            System.out.print("candType" + candType.toString());
-            System.out.println("    specType" + specType.toString());
-         }
+
+         // if (Globals.debug) {
+         //    System.out.print("candType:" + candType.toString());
+         //    System.out.println("    specType:" + specType.toString());
+         // }
+
          // Type mismatch is error EXCEPT when (1) spec calls for register name and
          // candidate is
          // register number, (2) spec calls for register number, candidate is register
@@ -155,44 +157,57 @@ public class OperandFormat {
             }
          }
 
-         int temp=Binary.stringToInt(candToken.getValue());
-         
-
-         if (specType == TokenTypes.REGISTER_NAME &&
-               candType == TokenTypes.REGISTER_NUMBER)
+         if (specType == TokenTypes.REGISTER_NAME && candType == TokenTypes.REGISTER_NUMBER) {
             continue;
+         }
+         if (specType == candType) {
+            continue;
+         }
+         if (candType == TokenTypes.INTEGER_5 ||
+               candType == TokenTypes.INTEGER_8 ||
+               candType == TokenTypes.INTEGER_8U ||
+               candType == TokenTypes.INTEGER_12 ||
+               candType == TokenTypes.INTEGER_12U ||
+               candType == TokenTypes.INTEGER_14 ||
+               candType == TokenTypes.INTEGER_14U ||
+               candType == TokenTypes.INTEGER_16 ||
+               candType == TokenTypes.INTEGER_16U ||
+               candType == TokenTypes.INTEGER_20 ||
+               candType == TokenTypes.INTEGER_20U ||
+               candType == TokenTypes.INTEGER_21 ||
+               candType == TokenTypes.INTEGER_21U ||
+               candType == TokenTypes.INTEGER_26 ||
+               candType == TokenTypes.INTEGER_26U ||
+               candType == TokenTypes.INTEGER_32) {
+            int temp = Binary.stringToInt(candToken.getValue());
 
-
-
-         if (specType.maxValue() < temp||temp<specType.minValue()) {
-            generateMessage(candToken, "operand is  out of  range", errors);
+            if (specType.maxValue() < temp || temp < specType.minValue()) {
+               generateMessage(candToken, "operand is  out of  range", errors);
+               return false;
+            } else {
+               continue;
+            }
+         } else {
+            generateMessage(candToken, "operand is of incorrect type", errors);
             return false;
          }
-         else {
-            continue;
-         }
-         //    generateMessage(candToken, "operand is of incorrect type", errors);
-         //    return false;
-         // } 
-
-
       }
 
-   /********
-    * nice little debugging code to see which operand format
-    ******** the operands for this source code instruction matched.
-    * System.out.print("Candidate: ");
-    * for (int i=1; i<spec.size(); i++) {
-    * System.out.print(cand.get(i).getValue()+" ");
-    * }
-    * System.out.print("Matched Spec: ");
-    * for (int i=1; i<spec.size(); i++) {
-    * System.out.print(spec.get(i).getValue()+" ");
-    * }
-    * System.out.println();
-    */
+      /********
+       * nice little debugging code to see which operand format
+       ******** the operands for this source code instruction matched.
+       * System.out.print("Candidate: ");
+       * for (int i=1; i<spec.size(); i++) {
+       * System.out.print(cand.get(i).getValue()+" ");
+       * }
+       * System.out.print("Matched Spec: ");
+       * for (int i=1; i<spec.size(); i++) {
+       * System.out.print(spec.get(i).getValue()+" ");
+       * }
+       * System.out.println();
+       */
 
-   return true;
+      return true;
 
    }
 
