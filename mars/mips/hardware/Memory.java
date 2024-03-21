@@ -506,7 +506,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             ? Globals.program.getBackStepper().addMemoryRestoreWord(address,set(address, value, length))
             : set(address, value, length);
       }
-   
+
+    public int setWord(int address, int value) throws AddressErrorException {
+         if (address % WORD_LENGTH_BYTES != 0) {
+            throw new AddressErrorException(
+               "store address not aligned on word boundary ",
+               Exceptions.ADDRESS_EXCEPTION_STORE,address);
+         }
+         return (Globals.getSettings().getBackSteppingEnabled())
+            ? Globals.program.getBackStepper().addMemoryRestoreWord(address,set(address, value, WORD_LENGTH_BYTES))
+            : set(address, value, WORD_LENGTH_BYTES);
+      }
    
     ///////////////////////////////////////////////////////////////////////////////////////
     /** 
