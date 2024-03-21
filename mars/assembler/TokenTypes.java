@@ -55,7 +55,7 @@ public final class TokenTypes {
    public static final TokenTypes REGISTER_NAME = new TokenTypes("REGISTER_NAME"); // mnemonic
    public static final TokenTypes REGISTER_NUMBER = new TokenTypes("REGISTER_NUMBER");
    public static final TokenTypes FP_REGISTER_NAME = new TokenTypes("FP_REGISTER_NAME");
-   public static final TokenTypes IDENTIFIER = new TokenTypes("IDENTIFIER");
+   public static final TokenTypes IDENTIFIER = new TokenTypes("IDENTIFIER",DataTypes.ZERO,DataTypes.MAX_UHALF_VALUE);
    public static final TokenTypes LEFT_PAREN = new TokenTypes("LEFT_PAREN");
    public static final TokenTypes RIGHT_PAREN = new TokenTypes("RIGHT_PAREN");
    // public static final TokenTypes INTEGER = new TokenTypes("INTEGER");

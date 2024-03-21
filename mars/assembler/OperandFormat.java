@@ -118,10 +118,10 @@ public class OperandFormat {
          candType = candToken.getType();
          specType = specToken.getType();
 
-         // if (Globals.debug) {
-         //    System.out.print("candType:" + candType.toString());
-         //    System.out.println("    specType:" + specType.toString());
-         // }
+         if (Globals.debug) {
+            System.out.print("candType:" + candType.toString());
+            System.out.println("    specType:" + specType.toString());
+         }
 
          // Type mismatch is error EXCEPT when (1) spec calls for register name and
          // candidate is
@@ -178,7 +178,8 @@ public class OperandFormat {
                candType == TokenTypes.INTEGER_21U ||
                candType == TokenTypes.INTEGER_26 ||
                candType == TokenTypes.INTEGER_26U ||
-               candType == TokenTypes.INTEGER_32) {
+               candType == TokenTypes.INTEGER_32
+               ) {
             int temp = Binary.stringToInt(candToken.getValue());
 
             if (specType.maxValue() < temp || temp < specType.minValue()) {
