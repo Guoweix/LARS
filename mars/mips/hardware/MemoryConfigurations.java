@@ -86,6 +86,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          0x7fffeffc, // stack pointer $sp (from SPIM not MIPS)
          0x7ffffffc, // stack base address
          0x7fffffff, // highest address in user space
+         
          0x80000000, // lowest address in kernel space
          0x80000000, // .ktext base address
          0x80000180, // exception handler address
@@ -111,6 +112,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          0x00002ffc, // stack pointer $sp 
          0x00002ffc, // stack base address
          0x00003fff, // highest address in user space
+
          0x00004000, // lowest address in kernel space
          0x00004000, // .ktext base address
          0x00004180, // exception handler address
